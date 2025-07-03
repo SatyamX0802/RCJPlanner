@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Resume Form</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+<div th:replace="~{layout :: navbar}"></div>
+<div class="max-w-4xl mx-auto bg-white mt-10 p-8 shadow rounded">
+  <h2 class="text-2xl font-bold mb-6">Resume Builder</h2>
+	<div th:if="${message}" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+	  <span th:text="${message}"></span>
+	</div>
+	
+  <form th:action="@{/resume/submit}" th:object="${resume}" method="post">
+
+    <!-- Profile -->
+    <div class="mb-4">
+      <label class="block font-semibold">Profile Summary</label>
+      <textarea th:field="*{profileSummary}" class="w-full p-2 border rounded"></textarea>
+    </div>
+
+    <!-- GitHub & LinkedIn -->
+    <div class="mb-4 grid grid-cols-2 gap-4">
+      <input th:field="*{githubLink}" placeholder="GitHub URL" class="p-2 border rounded" />
+      <input th:field="*{linkedinLink}" placeholder="LinkedIn URL" class="p-2 border rounded" />
+    </div>
+
+    <!-- Sections -->
+    <div id="educationSection">
+      <h3 class="text-xl font-bold mt-6">Education</h3>
+    </div>
+    <button type="button" onclick="addEducation()" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded">Add Education</button>
+
+    <div id="skillSection">
+      <h3 class="text-xl font-bold mt-6">Skills</h3>
+    </div>
+    <button type="button" onclick="addSkill()" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded">Add Skill</button>
+
+    <div id="experienceSection">
+      <h3 class="text-xl font-bold mt-6">Experience</h3>
+    </div>
+    <button type="button" onclick="addExperience()" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded">Add Experience</button>
+
+    <div id="projectSection">
+      <h3 class="text-xl font-bold mt-6">Projects</h3>
+    </div>
+    <button type="button" onclick="addProject()" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded">Add Project</button>
+
+    <div id="certificateSection">
+      <h3 class="text-xl font-bold mt-6">Certificates</h3>
+    </div>
+    <button type="button" onclick="addCertificate()" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded">Add Certificate</button>
+
+    <br>
+    <button class="bg-green-600 text-white px-4 py-2 mt-6 rounded hover:bg-green-700">Save Resume</button>
+  </form>
+</div>
+
+<script>
+  let eduCount = 0, skillCount = 0, expCount = 0, projCount = 0, certCount = 0;
+
+  function createInput(name, placeholder) {
+    return `<input name="${name}" placeholder="${placeholder}" class="w-full mb-2 p-2 border rounded" />`;
+  }
+
+  function removeElement(id, sectionId, prefix, fields) {
+    document.getElementById(id).remove();
+    reindexSection(sectionId, prefix, fields);
+  }
+
+  function reindexSection(sectionId, prefix, fields) {
+    const section = document.getElementById(sectionId);
+    const divs = section.querySelectorAll("div[id^='" + prefix + "-']");
+    divs.forEach((div, i) => {
+      div.id = `${prefix}-${i}`;
+      fields.forEach(field => {
+        const input = div.querySelector(`[name*="${field}"]`);
+        if (input) {
+          input.name = `${prefix}List[${i}].${field}`;
+        }
+      });
+    });
+    if (prefix === 'edu') eduCount = divs.length;
+    if (prefix === 'skill') skillCount = divs.length;
+    if (prefix === 'exp') expCount = divs.length;
+    if (prefix === 'proj') projCount = divs.length;
+    if (prefix === 'cert') certCount = divs.length;
+  }
+
+  function addEducation() {
+    const id = `edu-${eduCount}`;
+    const div = document.createElement('div');
+    div.id = id;
+    div.className = 'border p-4 mt-3 rounded relative';
+    div.innerHTML =
+      createInput(`educationList[${eduCount}].level`, 'Level') +
+      createInput(`educationList[${eduCount}].institution`, 'Institution') +
+      createInput(`educationList[${eduCount}].startYear`, 'Start Year') +
+      createInput(`educationList[${eduCount}].endYear`, 'End Year') +
+      createInput(`educationList[${eduCount}].percentage`, 'Percentage / CGPA') +
+      `<button type="button" class="absolute top-2 right-2 text-red-600 font-bold text-lg" onclick="removeElement('${id}', 'educationSection', 'edu', ['level','institution','startYear','endYear','percentage'])">✕</button>`;
+    document.getElementById('educationSection').appendChild(div);
+    eduCount++;
+  }
+
+  function addSkill() {
+    const id = `skill-${skillCount}`;
+    const div = document.createElement('div');
+    div.id = id;
+    div.className = 'border p-4 mt-3 rounded relative';
+    div.innerHTML =
+      createInput(`skillList[${skillCount}].name`, 'Skill Name') +
+      createInput(`skillList[${skillCount}].type`, 'Type') +
+      `<button type="button" class="absolute top-2 right-2 text-red-600 font-bold text-lg" onclick="removeElement('${id}', 'skillSection', 'skill', ['name','type'])">✕</button>`;
+    document.getElementById('skillSection').appendChild(div);
+    skillCount++;
+  }
+
+  function addExperience() {
+    const id = `exp-${expCount}`;
+    const div = document.createElement('div');
+    div.id = id;
+    div.className = 'border p-4 mt-3 rounded relative';
+    div.innerHTML =
+      createInput(`experienceList[${expCount}].jobTitle`, 'Job Title') +
+      createInput(`experienceList[${expCount}].description`, 'Description') +
+      createInput(`experienceList[${expCount}].startYear`, 'Start Year') +
+      createInput(`experienceList[${expCount}].endYear`, 'End Year') +
+      `<label class="inline-flex items-center mt-2">
+         <input type="checkbox" name="experienceList[${expCount}].currentlyWorking" class="mr-2"> Currently Working
+      </label>` +
+      `<button type="button" class="absolute top-2 right-2 text-red-600 font-bold text-lg" onclick="removeElement('${id}', 'experienceSection', 'exp', ['jobTitle','description','startYear','endYear','currentlyWorking'])">✕</button>`;
+    document.getElementById('experienceSection').appendChild(div);
+    expCount++;
+  }
+
+  function addProject() {
+    const id = `proj-${projCount}`;
+    const div = document.createElement('div');
+    div.id = id;
+    div.className = 'border p-4 mt-3 rounded relative';
+    div.innerHTML =
+      createInput(`projectList[${projCount}].title`, 'Project Title') +
+      createInput(`projectList[${projCount}].description`, 'Project Description') +
+      `<button type="button" class="absolute top-2 right-2 text-red-600 font-bold text-lg" onclick="removeElement('${id}', 'projectSection', 'proj', ['title','description'])">✕</button>`;
+    document.getElementById('projectSection').appendChild(div);
+    projCount++;
+  }
+
+  function addCertificate() {
+    const id = `cert-${certCount}`;
+    const div = document.createElement('div');
+    div.id = id;
+    div.className = 'border p-4 mt-3 rounded relative';
+    div.innerHTML =
+      createInput(`certificateList[${certCount}].title`, 'Certificate Title') +
+      createInput(`certificateList[${certCount}].url`, 'Certificate URL') +
+      `<button type="button" class="absolute top-2 right-2 text-red-600 font-bold text-lg" onclick="removeElement('${id}', 'certificateSection', 'cert', ['title','url'])">✕</button>`;
+    document.getElementById('certificateSection').appendChild(div);
+    certCount++;
+  }
+</script>
+</body>
+</html>

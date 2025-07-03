@@ -1,0 +1,29 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-db
+    environment:
+      MYSQL_DATABASE: rcjplanner
+      MYSQL_USER: rcjuser
+      MYSQL_PASSWORD: rcjpass
+      MYSQL_ROOT_PASSWORD: rootpass
+    ports:
+      - "3308:3306" # avoid conflict with system MySQL on 3306
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  app:
+    build: .
+    container_name: rcjplanner-app
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/rcjplanner?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: rcjuser
+      SPRING_DATASOURCE_PASSWORD: rcjpass
+    ports:
+      - "8080:8080"
+    restart: always
+
+volumes:
+  mysql-data:

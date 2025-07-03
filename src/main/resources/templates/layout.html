@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title th:text="${pageTitle} ?: 'RCJ Planner'">RCJ Planner</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+<!-- ✅ Navbar Fragment for USER -->
+<nav th:fragment="navbar" class="bg-gradient-to-r from-red-600 to-indigo-700 shadow text-white">
+  <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-3">
+    <a th:href="@{/dashboard}" class="text-2xl font-bold tracking-wide hover:text-gray-200">RCJ Planner</a>
+    <div class="space-x-6 text-sm sm:text-base">
+      <a th:href="@{/dashboard}" class="hover:text-gray-200">Dashboard</a>
+      <a th:href="@{/courses}" class="hover:text-gray-200">Courses</a>
+      <a th:href="@{/jobs/all}" class="hover:text-gray-200">Jobs</a>
+      <form th:action="@{/logout}" method="post" class="inline">
+        <button type="submit" class="bg-red-500 px-3 py-1 rounded hover:bg-red-600 transition">Logout</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<!-- ✅ Navbar Fragment for RECRUITER -->
+<nav th:fragment="recruiter" class="bg-gradient-to-r from-gray-900 to-gray-700 shadow text-white">
+  <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-3">
+    <a href="/recuiter/dashboard" class="text-2xl font-bold tracking-wide hover:text-yellow-300">RCJ Recruiter</a>
+    <div class="space-x-6 text-sm sm:text-base">
+      <a href="/recruiter/dashboard" class="hover:text-yellow-300">Dashboard</a>
+      <a href="/recruiter/my-posts" class="hover:text-yellow-300">My Posted Jobs</a>
+      <a href="/recruiter/post" class="hover:text-yellow-300">Post New Job</a>
+      <a href="/recruiter/applications" class="hover:text-yellow-300">Applications</a>
+      <form th:action="@{/logout}" method="post" class="inline">
+        <button type="submit" class="bg-red-500 px-3 py-1 rounded hover:bg-red-600 transition">Logout</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<!-- ✅ Footer Fragment for USER -->
+<footer th:fragment="userFooter" class="bg-blue-100 text-blue-900 mt-12 py-6">
+  <div class="max-w-6xl mx-auto px-6 text-center text-sm">
+    <p>© 2025 RCJ Planner. Empowering your career journey.</p>
+    <p class="mt-1">Need help? <a href="/support" class="underline hover:text-blue-600">Contact Support</a></p>
+  </div>
+</footer>
+
+<!-- ✅ Footer Fragment for RECRUITER -->
+<footer th:fragment="recruiterFooter" class="bg-gray-800 text-white mt-12 py-6">
+  <div class="max-w-6xl mx-auto px-6 text-center text-sm">
+    <p>© 2025 RCJ Recruiter Portal. Build your hiring pipeline.</p>
+    <p class="mt-1">Questions? <a href="/support" class="underline hover:text-yellow-400">Reach Support</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

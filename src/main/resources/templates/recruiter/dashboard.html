@@ -1,0 +1,43 @@
+<!-- templates/recruiter/dashboard.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Recruiter Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+<div th:replace="~{layout :: recruiter}"></div>
+<div class="max-w-4xl mx-auto mt-10 bg-white p-6 rounded shadow">
+    <h1 class="text-3xl font-bold mb-6 text-center">Welcome, <span th:text="${name}">Recruiter</span>!</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Post a New Job -->
+        <div class="bg-blue-100 p-4 rounded shadow hover:shadow-md transition">
+            <h2 class="text-xl font-semibold mb-2">Post a New Job</h2>
+            <p class="mb-4 text-gray-700">Add a new job listing with title, description, and details.</p>
+            <a href="/recruiter/post" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                Post Job
+            </a>
+        </div>
+
+        <!-- Manage Your Jobs -->
+        <div class="bg-green-100 p-4 rounded shadow hover:shadow-md transition">
+            <h2 class="text-xl font-semibold mb-2">Manage Posted Jobs</h2>
+            <p class="mb-4 text-gray-700">View, close, or update jobs you've posted.</p>
+            <a href="/recruiter/my-posts" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                View Jobs
+            </a>
+        </div>
+
+        <!-- View Applications -->
+        <div class="bg-yellow-100 p-4 rounded shadow hover:shadow-md transition md:col-span-2">
+            <h2 class="text-xl font-semibold mb-2">View Applications</h2>
+            <p class="mb-4 text-gray-700">See who has applied for your jobs and update application status.</p>
+            <a href="/recruiter/applications" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">
+                View Applicants
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

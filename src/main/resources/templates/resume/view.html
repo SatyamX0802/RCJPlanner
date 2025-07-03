@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>View Resume</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+<div th:replace="~{layout :: navbar}"></div>
+<div class="max-w-5xl mx-auto bg-white p-8 mt-10 shadow rounded">
+
+  <h1 class="text-3xl font-bold mb-6">My Resume</h1>
+	
+	<div th:if="${resume == null}">
+	  <h3 class="text-red-500 font-semibold">No Resume Found</h3><br>
+	  <a th:href="@{/resume/form}" class="text-blue-600 hover:underline font-semibold">
+	      Create Resume
+	  </a>
+	</div>
+		
+  <div th:if="${resume != null}">
+  	<a th:href="@{/resume/pdf}" target="_blank"
+   		class="inline-block bg-red-500 text-white px-4 py-2 my-4 rounded hover:bg-red-600">
+   		📄 Download PDF
+  	</a>
+    <!-- Profile -->
+    <div class="mb-6">
+      <h2 class="text-xl font-semibold">Profile Summary</h2>
+      <p class="mt-2 text-gray-700" th:text="${resume.profileSummary}">Profile summary...</p>
+    </div>
+
+    <!-- GitHub & LinkedIn -->
+    <div class="mb-6">
+      <a th:href="${resume.githubLink}" class="text-blue-600 mr-4" target="_blank">GitHub</a>
+      <a th:href="${resume.linkedinLink}" class="text-blue-600" target="_blank">LinkedIn</a>
+    </div>
+
+    <!-- Education -->
+    <div class="mb-6">
+      <h2 class="text-xl font-semibold">Education</h2>
+      <div th:each="edu : ${resume.educationList}" class="mt-2 border rounded p-4">
+        <p class="font-semibold" th:text="${edu.level}">Level</p>
+        <p th:text="${edu.institution}">Institution</p>
+        <p th:text="${edu.startYear + ' - ' + edu.endYear}">Duration</p>
+        <p th:text="${edu.percentage + '%'}">Percentage</p>
+      </div>
+    </div>
+
+    <!-- Skills -->
+    <div class="mb-6">
+      <h2 class="text-xl font-semibold">Skills</h2>
+      <ul class="list-disc list-inside">
+        <li th:each="skill : ${resume.skillList}" th:text="${skill.name + ' (' + skill.type + ')'}">Skill</li>
+      </ul>
+    </div>
+
+    <!-- Experience -->
+    <div class="mb-6">
+      <h2 class="text-xl font-semibold">Experience</h2>
+      <div th:each="exp : ${resume.experienceList}" class="mt-2 border rounded p-4">
+        <p class="font-semibold" th:text="${exp.jobTitle}">Job Title</p>
+        <p th:text="${exp.description}">Description</p>
+        <p th:text="${exp.startYear + ' - ' + (exp.currentlyWorking ? 'Present' : exp.endYear)}">Duration</p>
+      </div>
+    </div>
+
+    <!-- Projects -->
+    <div class="mb-6">
+      <h2 class="text-xl font-semibold">Projects</h2>
+      <div th:each="proj : ${resume.projectList}" class="mt-2 border rounded p-4">
+        <p class="font-semibold" th:text="${proj.title}">Project Title</p>
+        <p th:text="${proj.description}">Description</p>
+      </div>
+    </div>
+
+    <!-- Certificates -->
+    <div class="mb-6">
+      <h2 class="text-xl font-semibold">Certificates</h2>
+      <ul class="list-disc list-inside">
+        <li th:each="cert : ${resume.certificateList}">
+          <a th:href="${cert.url}" th:text="${cert.title}" class="text-blue-600" target="_blank">Certificate Title</a>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="mt-8 text-right">
+      <a th:href="@{/resume/form}"
+         class="inline-block bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700">
+         ✏️ Edit Resume
+      </a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Recruiter - Applications</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+<div th:replace="~{layout :: recruiter}"></div>
+<div class="max-w-6xl mx-auto mt-10 p-6 bg-white rounded shadow">
+
+  <h1 class="text-3xl font-bold mb-6">Applications to Your Jobs</h1>
+
+  <div th:if="${#lists.isEmpty(applications)}" class="text-gray-600">
+    No applications yet.
+  </div>
+
+  <div th:each="app : ${applications}" class="border p-4 mb-4 rounded shadow">
+    <h2 class="text-xl font-semibold" th:text="${app.job.title}">Job Title</h2>
+    <p class="text-sm text-gray-600">Applicant: <span th:text="${app.user.fullName}">User Name</span> (<span th:text="${app.user.email}">email</span>)</p>
+    <p class="text-sm text-gray-500">Status: <span th:text="${app.status}">Status</span></p>
+
+    <form th:action="@{/recruiter/update-status/{id}(id=${app.id})}" method="post" class="mt-2 space-x-2">
+      <button name="status" value="selected" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded">Mark Selected</button>
+      <button name="status" value="rejected" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">Mark Rejected</button>
+    </form>
+  </div>
+
+</div>
+</body>
+</html>

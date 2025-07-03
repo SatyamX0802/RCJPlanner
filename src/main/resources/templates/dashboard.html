@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>User Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen font-sans">
+<div th:replace="~{layout :: navbar}"></div>
+
+<div class="max-w-6xl mx-auto mt-12 px-6">
+  <div class="bg-white p-10 rounded-xl shadow-lg">
+    <h1 class="text-4xl font-bold text-gray-800 mb-10 text-center">👤 Welcome to Your Dashboard</h1>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      
+      <!-- Build/Edit Resume -->
+      <a th:href="@{/resume/form}"
+         class="group block bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-xl shadow hover:scale-105 transition transform duration-300 ease-in-out">
+        <h2 class="text-xl font-semibold mb-1 group-hover:underline">Build / Edit Resume</h2>
+        <p class="text-sm opacity-90">Create or update your resume details.</p>
+      </a>
+
+      <!-- View Resume -->
+      <a th:href="@{/resume/view}"
+         class="group block bg-gradient-to-r from-green-500 to-green-600 text-white p-6 rounded-xl shadow hover:scale-105 transition transform duration-300 ease-in-out">
+        <h2 class="text-xl font-semibold mb-1 group-hover:underline">View Resume</h2>
+        <p class="text-sm opacity-90">Preview your submitted resume.</p>
+      </a>
+
+      <!-- Download Resume PDF -->
+      <!-- Resume PDF download card -->
+	<div th:if="${resume == null}">
+	  <a th:href="@{/resume/view}" target="_blank"
+	     class="group block bg-gradient-to-r from-red-500 to-red-600 text-white p-6 rounded-xl shadow hover:scale-105 transition transform duration-300 ease-in-out">
+	    <div class="text-3xl mb-2">📄</div>
+	    <h2 class="text-xl font-semibold mb-1 group-hover:underline">Download PDF</h2>
+	    <p class="text-sm opacity-90">Get your resume as a printable PDF.</p>
+	  </a>
+	</div>
+      
+
+      <!-- My Courses -->
+      <a th:href="@{/courses}"
+         class="group block bg-gradient-to-r from-purple-500 to-purple-600 text-white p-6 rounded-xl shadow hover:scale-105 transition transform duration-300 ease-in-out">
+        <h2 class="text-xl font-semibold mb-1 group-hover:underline">My Courses</h2>
+        <p class="text-sm opacity-90">Track and manage your enrolled courses.</p>
+      </a>
+
+      <!-- Job Applications -->
+      <a th:href="@{/jobs/all}"
+         class="group block bg-gradient-to-r from-yellow-500 to-yellow-600 text-white p-6 rounded-xl shadow hover:scale-105 transition transform duration-300 ease-in-out">
+        <h2 class="text-xl font-semibold mb-1 group-hover:underline">My Job Applications</h2>
+        <p class="text-sm opacity-90">View your job history and application status.</p>
+      </a>
+
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>

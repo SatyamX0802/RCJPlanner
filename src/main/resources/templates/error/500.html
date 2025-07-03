@@ -1,0 +1,29 @@
+<!-- src/main/resources/templates/error/500.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <title>Server Error</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-yellow-50">
+  <div class="text-center mt-20">
+    <h1 class="text-4xl font-bold text-yellow-600">500</h1>
+    <p class="text-xl mt-4">Oops! Something went wrong on the server.</p>
+
+    <div sec:authorize="hasAuthority('RECRUITER')">
+	    <a href="/recruiter/dashboard" class="text-blue-500 underline inline-block mt-4">
+	      Go to Recruiter Dashboard
+	    </a>
+	  </div>
+	
+	  <!-- User dashboard link -->
+	  <div sec:authorize="hasAuthority('ROLE_USER')">
+	    <a href="/dashboard" class="text-blue-500 underline inline-block mt-4">
+	      Go to User Dashboard
+	    </a>
+	  </div>
+  </div>
+</body>
+</html>
