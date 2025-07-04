@@ -1,10 +1,22 @@
-HELP.md
+# Maven build directory
 target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+build/
 
-### STS ###
+# Maven wrapper
+.mvn/wrapper/maven-wrapper.jar
+
+# Logs and temp files
+*.log
+*.tmp
+
+# Ignore Docker-related data volumes (optional)
+mysql-data/
+
+# Ignore environment/config files (optional for secrets)
+.env
+
+# IDEs and tooling
+# STS
 .apt_generated
 .classpath
 .factorypath
@@ -13,21 +25,24 @@ target/
 .springBeans
 .sts4-cache
 
-### IntelliJ IDEA ###
+# IntelliJ IDEA
 .idea
 *.iws
 *.iml
 *.ipr
 
-### NetBeans ###
+# NetBeans
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
-build/
+
+# VS Code
+.vscode/
+
+# Don't ignore source target or build dirs if they exist (optional rules, can be removed)
+!**/src/main/**/target/
+!**/src/test/**/target/
 !**/src/main/**/build/
 !**/src/test/**/build/
-
-### VS Code ###
-.vscode/
