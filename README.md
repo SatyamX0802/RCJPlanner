@@ -6,7 +6,7 @@ A full-stack web application built with **Spring Boot** that helps users manage 
 
 ## Live Demo
 
-> Deployed on **Railway** — [Railway app]([https://github.com/SatyamX0802](https://rcjplanner-production-2b2d.up.railway.app/))
+> Deployed on **Railway** — [Railway app](https://rcjplanner-production-2b2d.up.railway.app/)
 
 ---
 
@@ -159,7 +159,7 @@ The application will start at `http://localhost:8080`
 
 ## Deployment (Railway)
 
-This project is deployed on rcjplanner-[Railway app]([https://github.com/SatyamX0802](https://rcjplanner-production-2b2d.up.railway.app/)).
+This project is deployed on rcjplanner-[Railway app](https://rcjplanner-production-2b2d.up.railway.app/).
 
 **Environment variables configured on Railway:**
 
